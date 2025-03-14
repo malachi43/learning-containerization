@@ -1,0 +1,39 @@
+services:
+
+  api:
+    depends_on:
+      - postgres-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    restart: always
+    networks: 
+      - altschool_network
+    environment:
+      - PORT=5000
+      - DB_HOST=postgres-db
+      - DB_USER=malachi
+      - DB_NAME=altschool
+      - DB_PASS=secret
+      - DB_PORT=5432
+    
+    ports:
+      - "5000:5000"
+  
+  postgres-db:
+    image: postgres:17.2
+    networks: 
+      - altschool_network
+    environment:
+      - POSTGRES_USER=malachi
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=altschool
+    ports:
+      - 5432:5432
+    container_name: postgres-db
+
+networks:
+  altschool_network:
+    name: altschool_network
+    driver: bridge
