@@ -16,15 +16,13 @@ concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-  # Deployment workflow
-  # build docker image of my code
-  # 1. build my code
-  # 2. push my built image to a docker registry
-  #
-  # deploy my code
-  # 3. login into a server
-  # 4. pull the docker image i pushed in step 2
-  # 5. run docker-compose commands
+  # 1. Checkout your repo
+  # 2. Configure AWS with your access_key and secret_access_key credentials
+  # 3. Login to ECR (Elastic Container Registry)
+  # 4. Build an image from the Dockerfile present in the checkout repository and push the image to ECR.
+  # 5. SSH into your instance using your username and the instance ip_address
+  # 6. Pull and run the just build image pushed to the ECR
+
 
 jobs:
   build:
@@ -45,14 +43,15 @@ jobs:
       - name: Login to ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-
+      
       - name: Build and Push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: ${{ env.AWS_ECR_REGISTRY }}/${{ env.AWS_ECR_REPOSITORY }}:${{ github.sha }}
-  deploy_to_staging:
+
+  deploy_built_image:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
