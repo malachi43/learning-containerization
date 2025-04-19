@@ -30,3 +30,11 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  Test-new-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -la
+      - name: Running terminal commands
+        run: |
+         ls -la
+         echo "this is the current directory: $(pwd)"
