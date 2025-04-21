@@ -57,11 +57,11 @@ jobs:
     steps:
       - name: Deploy to EC2 54.154.29.38
         uses: appleboy/ssh-action@master
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_SECRET }}
+          password: ${{ secrets.SSH_PASSWORD }}
           script: |
             set -ex
             export IMAGE_TAG=${{ github.sha }}
