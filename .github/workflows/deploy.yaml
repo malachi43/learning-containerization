@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: ${{ env.AWS_ECR_REGISTRY }}/${{ env.AWS_ECR_REPOSITORY }}:latest
 
-  deploy_built_image:
+  deploy_to_staging:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
