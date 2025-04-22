@@ -3,8 +3,7 @@ services:
   api:
     depends_on:
       - postgres-db
-    build:
-      image: 051522203948.dkr.ecr.eu-west-1.amazonaws.com/node-app:latest
+    image: 051522203948.dkr.ecr.eu-west-1.amazonaws.com/node-app:latest
     container_name: node-app
     restart: always
     networks: 
