@@ -66,7 +66,7 @@ jobs:
             set -ex
             export IMAGE_TAG=${{ github.sha }}
             cd ~/sootchy-api
-            aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ env.AWS_REGISTRY }}
+            aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REGISTRY }}
             docker compose pull node-app
             docker compose down -v --remove-orphans
             docker compose up -d --force-recreate node-app
